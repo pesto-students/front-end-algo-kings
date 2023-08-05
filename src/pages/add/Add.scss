@@ -1,0 +1,61 @@
+.add {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+
+  .container {
+    width: 1400px;
+    padding: 50px 0px;
+
+    h1 {
+      width: max-content;
+      margin-bottom: 30px;
+      color: white;
+      font-weight: 300;
+    }
+
+    .sections {
+      display: flex;
+      justify-content: space-between;
+      gap: 100px;
+
+      label {
+        color: white;
+        font-size: 18px;
+      }
+
+      .info,
+      .details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: space-between;
+
+        input,
+        select,
+        textarea {
+          padding: 20px;
+          background-color: #fff8f1;
+        }
+
+        select:focus,
+        textarea:focus,
+        input:focus {
+          outline: none !important;
+          border: 2px solid #ff4533;
+        }
+
+        button {
+          border: none;
+          padding: 20px;
+          color: white;
+          font-weight: 500;
+          font-size: 18px;
+          background-color: #ff4533;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
