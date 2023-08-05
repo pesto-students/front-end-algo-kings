@@ -1,0 +1,63 @@
+.leverage {
+  color: #f8efe5;
+  width: 85vw;
+  margin: auto;
+  margin-top: 170px;
+}
+.leverage > p {
+  font-size: 24px;
+  margin: 40px 0;
+}
+.box {
+  margin-top: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 85vw;
+  flex-direction: column;
+}
+.top {
+  display: flex;
+  width: 85vw;
+}
+.bottom {
+  display: flex;
+  width: 85vw;
+}
+
+.sub {
+  width: calc(85vw / 3);
+  display: flex;
+  height: 250px;
+  align-items: stretch;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: -1px 0 0 -1px;
+  padding: 40px;
+  text-decoration: none;
+  font-weight: lighter;
+  opacity: 0.7;
+}
+.sub > h3 {
+  color: white;
+}
+
+.sub:hover {
+  background-color: #fe6a5d;
+  opacity: 1;
+}
+.two,
+.three {
+  border-left: 1px solid gray;
+}
+
+.bottom .one {
+  border-top: 1px solid gray;
+}
+.bottom .two {
+  border-top: 1px solid gray;
+}
+.bottom .three {
+  border-top: 1px solid gray;
+}
