@@ -1,5 +1,5 @@
 
-# Gigster Frontend
+# Gigster
 
 ![Gigster Logo Light](/public/img/Light.png) ![Gigster Logo Dark](/public/img/Dark.png) 
 
