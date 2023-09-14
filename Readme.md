@@ -33,3 +33,6 @@ Open your web browser and go to http://localhost:5173 to see Gigster in action.
 ![Screenshot 1](/public/img/SS5.png)
 ![Screenshot 1](/public/img/SS6.png)
 
+## License
+
+This project is licensed under the MIT License .
