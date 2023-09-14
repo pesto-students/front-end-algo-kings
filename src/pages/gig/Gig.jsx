@@ -13,7 +13,7 @@ const url = getApiBaseUrl();
 
 const user = getCurrentUser();
 
-const currentUserID = user._id;
+const currentUserID = user?._id;
 
 function Gig() {
   const { id } = useParams();
