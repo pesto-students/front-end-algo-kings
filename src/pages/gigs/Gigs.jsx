@@ -14,10 +14,6 @@ function Gigs() {
 
   const { search } = useLocation();
 
-  // const currentUserString = localStorage.getItem("currentUser");
-  // const currentUser = JSON.parse(currentUserString);
-  // console.log(currentUser.accessToken);
-  // const token = currentUser.accessToken;
 
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["gigs"],
@@ -49,7 +45,7 @@ function Gigs() {
     refetch();
   };
 
-  // Assuming you have stored the JSON string in local storage
+  
 
   return (
     <div className="gigs">

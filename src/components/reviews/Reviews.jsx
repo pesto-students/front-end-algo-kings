@@ -1,26 +1,3 @@
-// import React from "react";
-// import "./Reviews.scss";
-// import Review from "../review/Review";
-// import { useQuery } from "@tanstack/react-query";
-// import newRequest from "../../utils/newRequest";
-
-// const Reviews = ({gigId}) => {
-//     const { isLoading, error, data } = useQuery({
-//         queryKey: ["reviews"],
-//         queryFn: () =>
-//           newRequest.get(`/reviews/${gigId}`).then((res) => {
-//             return res.data;
-//           }),
-//       });
-
-//   <div className="reviews">
-//     <h2>Reviews</h2>
-//     {isLoading ? "Loading" :error ? "Something went wrong!" : data.map((review)=><Review key={review._id} review={review}/>)}
-//     <Review />
-//   </div>;
-// };
-
-// export default Reviews;
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import newRequest from "../../utils/newRequest";
@@ -45,12 +22,6 @@ const Reviews = ({ gigId }) => {
     },
   });
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const desc = e.target[0].value;
-  //   const star = e.target[1].value;
-  //   mutation.mutate({ gigId, desc, star });
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
     const desc = e.target[0].value;

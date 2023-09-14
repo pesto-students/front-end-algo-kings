@@ -62,7 +62,7 @@ function Gig() {
       },
       body: JSON.stringify({
         items: [
-          // Define your line items here
+         
           {
             price: "price_1NjmAlSFwnpGRs91N78Q2OaL",
             quantity: 1,

@@ -16,10 +16,9 @@ newRequest.interceptors.request.use(
     let flag = true;
     if (parsedUser == null) flag = false;
 
-    // const token = localStorage.getItem("acessToken");
+  
     if (flag) {
-      // const user = localStorage.getItem("currentUser");
-      // const parsedUser = JSON.parse(user);
+     
       const token = parsedUser.accessToken;
       config.headers.Authorization = `Bearer ${token}`;
     }

@@ -15,4 +15,4 @@ function CatCard({ card }) {
   );
 }
 export default CatCard;
-// /gigs?cat=designer
+

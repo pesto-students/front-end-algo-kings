@@ -14,7 +14,5 @@ const upload = async (file) => {
     console.log(err);
   }
 };
-// https://api.cloudinary.com/v1_1/dpicmdx9c/image/upload
-// import.meta.env.VITE_UPLOAD_LINK
-// https://api.cloudinary.com/v1_1/dpicmdx9c
+
 export default upload;

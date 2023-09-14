@@ -3,7 +3,6 @@ import "./GigCard.scss";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
-import { BarLoader } from "react-spinners";
 
 const GigCard = ({ item }) => {
   const { isLoading, error, data } = useQuery({
@@ -43,7 +42,7 @@ const GigCard = ({ item }) => {
           <img src="./img/heart.png" alt="" />
           <div className="price">
             <span>STARTING AT</span>
-            <h2>$ {item.price}</h2>
+            <h2>₹ {item.price}</h2>
           </div>
         </div>
       </div>
