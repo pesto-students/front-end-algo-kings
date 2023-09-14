@@ -23,10 +23,13 @@ To install and run the Gigster frontend locally, follow these steps:
    ```bash
    npm run dev
    
-Open your web browser and go to http://localhost:3000 to see Gigster in action.
+Open your web browser and go to http://localhost:5173 to see Gigster in action.
 
 # Screenshots
 
 ![Screenshot 1](/public/img/SS1.png)
-
+![Screenshot 1](/public/img/SS2.png)
+![Screenshot 1](/public/img/SS3.png)
+![Screenshot 1](/public/img/SS5.png)
+![Screenshot 1](/public/img/SS6.png)
 
