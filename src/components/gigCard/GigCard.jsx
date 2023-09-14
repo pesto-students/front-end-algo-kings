@@ -19,14 +19,7 @@ const GigCard = ({ item }) => {
         <img src={item.cover} alt="" />
         <div className="info">
           {isLoading ? (
-            <div className="loader">
-              <BarLoader
-                color="#ff4533"
-                loading={isLoading}
-                width={70}
-                height={5}
-              />
-            </div>
+            "Loading.."
           ) : error ? (
             "Something went wrong!"
           ) : (

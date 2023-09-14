@@ -58,22 +58,7 @@ function Register() {
       console.error("Error sending email", error);
     }
   };
-  // const verifyOTP = async () => {
-  //   try {
-  //     const response = await newRequest.post("/send/verify-otp", {
-  //       otp: enteredOTP,
-  //     });
-
-  //     if (response.status === 200) {
-  //       setVerificationStatus("verified");
-  //     } else {
-  //       setVerificationStatus("wrong otp");
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     setVerificationStatus("wrong otp");
-  //   }
-  // };
+  
   const verifyOTP = async () => {
     try {
       const response = await newRequest.post("/send/verify-otp", {

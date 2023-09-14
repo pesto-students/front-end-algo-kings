@@ -5,7 +5,15 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import Reviews from "../../components/reviews/Reviews";
-// import { BarLoader } from "react-spinners/ClipLoader";
+import { BarLoader } from "react-spinners";
+import { getApiBaseUrl } from "../../helper.js";
+import getCurrentUser from "../../utils/getCurrentUser.js";
+
+const url = getApiBaseUrl();
+
+const user = getCurrentUser();
+
+const currentUserID = user._id;
 
 function Gig() {
   const { id } = useParams();
@@ -33,10 +41,53 @@ function Gig() {
     enabled: !!userId,
   });
 
+  const handlePay = async () => {
+    let paymentIntentId;
+    //! creating new order
+    const res = await newRequest.post(`/orders/${id}`, {
+      buyerId: currentUserID,
+    });
+    if (res.status === 200) {
+      paymentIntentId = res.data.paymentIntentId;
+
+      console.log("Payment Intent ID:", paymentIntentId);
+    } else {
+      console.error("Error:", response.statusText);
+    }
+
+    //! pay page
+    const response = await newRequest.post(`${url}/checkout`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: [
+          // Define your line items here
+          {
+            price: "price_1NjmAlSFwnpGRs91N78Q2OaL",
+            quantity: 1,
+          },
+        ],
+        payment_intent: paymentIntentId,
+      }),
+    });
+    console.log("response is --->", response);
+    const data = await response.data;
+    console.log("data is -->", data);
+    window.location.href = data.url;
+  };
+
   return (
     <div className="gig">
       {isLoading ? (
-        "Loading..."
+        <div className="loader">
+          <BarLoader
+            color="#ff4533"
+            loading={isLoading}
+            width={150}
+            height={10}
+          />
+        </div>
       ) : error ? (
         "Something went wrong!"
       ) : (
@@ -44,7 +95,14 @@ function Gig() {
           <div className="left">
             <h1>{data.title}</h1>
             {isLoadingUser ? (
-              "Loading..."
+              <div className="loader">
+                <BarLoader
+                  color="#ff4533"
+                  loading={isLoading}
+                  width={150}
+                  height={10}
+                />
+              </div>
             ) : errorUser ? (
               "Something went wrong!"
             ) : (
@@ -75,7 +133,14 @@ function Gig() {
             <h2>About This Gig</h2>
             <p>{data.desc}</p>
             {isLoadingUser ? (
-              "Loading..."
+              <div className="loader">
+                <BarLoader
+                  color="#ff4533"
+                  loading={isLoading}
+                  width={150}
+                  height={10}
+                />
+              </div>
             ) : errorUser ? (
               "Something went wrong!"
             ) : (
@@ -103,7 +168,18 @@ function Gig() {
                       style={{ cursor: "pointer" }}
                       onClick={() =>
                         (window.location = `mailto:${
-                          isLoadingUser ? "Loading..." : dataUser.email
+                          isLoadingUser ? (
+                            <div className="loader">
+                              <BarLoader
+                                color="#ff4533"
+                                loading={isLoading}
+                                width={150}
+                                height={10}
+                              />
+                            </div>
+                          ) : (
+                            dataUser.email
+                          )
                         }`)
                       }
                     >
@@ -165,9 +241,8 @@ function Gig() {
                 </div>
               ))}
             </div>
-            <Link to={`/pay/${id}`}>
-              <button>Continue</button>
-            </Link>
+
+            <button onClick={handlePay}> Continue</button>
           </div>
         </div>
       )}

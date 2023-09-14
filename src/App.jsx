@@ -16,7 +16,6 @@ import MyGigs from "./pages/myGigs/MyGigs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Pay from "./pages/pay/Pay";
 import Success from "./pages/success/Success";
-import { Helmet } from "react-helmet";
 
 function App() {
   const queryClient = new QueryClient();
@@ -82,11 +81,12 @@ function App() {
           path: "/pay/:id",
           element: <Pay />,
         },
-        {
-          path: "/success",
-          element: <Success />,
-        },
       ],
+    },
+    {
+      // Separate route for the Success page without Navbar and Footer
+      path: "/success",
+      element: <Success />,
     },
   ]);
 

@@ -1,8 +1,8 @@
 import axios from "axios";
-import { getApiBaseUrl } from "../helper";
-import { config, parse } from "dotenv";
+import { getApiBaseUrl } from "../helper.js";
+
 const url = getApiBaseUrl();
-console.log("url------>", url);
+
 
 const newRequest = axios.create({
   baseURL: url,
