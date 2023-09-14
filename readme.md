@@ -12,8 +12,8 @@ To install and run the Gigster frontend locally, follow these steps:
    
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/gigster-frontend.git
-   cd gigster-frontend
+   git clone [https://github.com/your-username/gigster-frontend.git](https://github.com/pesto-students/front-end-algo-kings.git)
+   cd frontend-algo-kings
    
 2. Install project dependencies.
    ```bash
@@ -27,5 +27,6 @@ Open your web browser and go to http://localhost:3000 to see Gigster in action.
 
 # Screenshots
 
+![Screenshot 1](/public/img/SS1.png)
 
 
