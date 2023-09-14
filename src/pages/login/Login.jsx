@@ -11,6 +11,7 @@ function Login() {
   const navigate = useNavigate();
 
   const handleGuestLogin = async () => {
+    throw new Error("button not working");
     try {
       setUsername("user1");
       setPassword("user1");
