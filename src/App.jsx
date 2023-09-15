@@ -14,7 +14,6 @@ import Messages from "./pages/messages/Messages";
 import Message from "./pages/message/Message";
 import MyGigs from "./pages/myGigs/MyGigs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Pay from "./pages/pay/Pay";
 import Success from "./pages/success/Success";
 
 function App() {
