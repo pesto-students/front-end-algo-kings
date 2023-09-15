@@ -77,10 +77,6 @@ function App() {
           path: "/login",
           element: <Login />,
         },
-        {
-          path: "/pay/:id",
-          element: <Pay />,
-        },
       ],
     },
     {
