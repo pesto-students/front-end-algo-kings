@@ -5,7 +5,6 @@ import newRequest from "../../utils/newRequest";
 import "./Message.scss";
 import { BarLoader } from "react-spinners";
 
-
 const Message = () => {
   const { id } = useParams();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -46,14 +45,15 @@ const Message = () => {
     queryKey: ["sellers"],
     queryFn: () =>
       Promise.all(
-        data.map((c) =>
-          newRequest
-            .get(
-              `conversations/getName/${
-                currentUser.isSeller ? buyerId : sellerId
-              }`
-            )
-            .then((res) => setUsername(res.data))
+        data.map(
+          async (c) =>
+            await newRequest
+              .get(
+                `conversations/getName/${
+                  currentUser.isSeller ? buyerId : sellerId
+                }`
+              )
+              .then((res) => setUsername(res.data))
         )
       ),
     enabled: !!data,
@@ -71,25 +71,32 @@ const Message = () => {
               Messages
             </Link>
           </div>
-          <h1> {sellerDataLoading ? <div className="loader">
-              <BarLoader
-                color="#ff4533"
-                loading={isLoading}
-                width={150}
-                height={10}
-              />
-            </div> : username}</h1>
+          <h1>
+            {" "}
+            {sellerDataLoading ? (
+              <div className="loader">
+                <BarLoader
+                  color="#ff4533"
+                  loading={isLoading}
+                  width={150}
+                  height={10}
+                />
+              </div>
+            ) : (
+              username
+            )}
+          </h1>
         </div>
 
         {isLoading ? (
           <div className="loader">
-          <BarLoader
-            color="#ff4533"
-            loading={isLoading}
-            width={150}
-            height={10}
-          />
-        </div>
+            <BarLoader
+              color="#ff4533"
+              loading={isLoading}
+              width={150}
+              height={10}
+            />
+          </div>
         ) : error ? (
           "error"
         ) : (
