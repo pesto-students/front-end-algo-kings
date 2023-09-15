@@ -12,6 +12,7 @@ const GigCard = ({ item }) => {
         return res.data;
       }),
   });
+
   return (
     <Link to={`/gig/${item._id}`} className="link">
       <div className="gigCard">
@@ -24,11 +25,12 @@ const GigCard = ({ item }) => {
           ) : (
             <div className="user">
               <img src={data.img || "/img/noavatar.png"} alt="" />
-
               <span>{data.username}</span>
+              {console.log("data is -> ", data)}
+              {console.log("item is ->", item)}
             </div>
           )}
-          <p>{item.desc}</p>
+          <p>{item.shortDesc}</p>
           <div className="star">
             <img src="./img/star.png" alt="" />
             <span>

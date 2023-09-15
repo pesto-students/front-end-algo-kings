@@ -89,8 +89,7 @@ const Messages = () => {
                 key={c.id}
               >
                 {/* <td>{isLoadiing ? "Loading.." : res.data}</td> */}
-                {console.log(sellerData)}
-
+                
                 <td>
                   {!currentUser.isSeller
                     ? sellerDataLoading
