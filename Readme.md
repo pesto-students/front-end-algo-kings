@@ -33,6 +33,12 @@ Open your web browser and go to http://localhost:5173 to see Gigster in action.
 ![Screenshot 1](/public/img/SS5.png)
 ![Screenshot 1](/public/img/SS6.png)
 
+
+## Authors
+
+- [Om Dubey](https://github.com/om-1021)
+- [Aniket Bhusal](https://github.com/aniket1010)
+
 ## License
 
 This project is licensed under the MIT License .
