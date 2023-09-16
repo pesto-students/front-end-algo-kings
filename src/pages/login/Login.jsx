@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import "./Login.scss";
 import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,12 +24,16 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const res = await newRequest.post("/auth/login", { username, password });
+      console.log(res);
       localStorage.setItem("currentUser", JSON.stringify(res.data));
 
       navigate("/");
     } catch (err) {
-      console.log(err);
+      setError("Login failed");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,7 +56,9 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? <ClipLoader color="white" /> : "Login"}
+        </button>
         <button type="button" onClick={handleGuestLogin}>
           Guest Login
         </button>

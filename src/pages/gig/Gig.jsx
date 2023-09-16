@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Gig.scss";
 import { Slider } from "infinite-react-carousel/lib";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import Reviews from "../../components/reviews/Reviews";
-import { BarLoader } from "react-spinners";
+import { BarLoader, ClipLoader } from "react-spinners";
 import { getApiBaseUrl } from "../../helper.js";
 import getCurrentUser from "../../utils/getCurrentUser.js";
 
@@ -17,7 +17,7 @@ const currentUserID = user?._id;
 
 function Gig() {
   const { id } = useParams();
-
+  const [isProcessing, setIsProcessing] = useState(false);
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
     queryFn: () =>
@@ -42,39 +42,49 @@ function Gig() {
   });
 
   const handlePay = async () => {
-    let paymentIntentId;
-    //! creating new order
-    const res = await newRequest.post(`/orders/${id}`, {
-      buyerId: currentUserID,
-    });
-    if (res.status === 200) {
-      paymentIntentId = res.data.paymentIntentId;
-
-      console.log("Payment Intent ID:", paymentIntentId);
-    } else {
-      console.error("Error:", response.statusText);
+    if (isProcessing) {
+      return;
     }
 
-    //! pay page
-    const response = await newRequest.post(`${url}/checkout`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        items: [
-         
-          {
-            price: "price_1NjmAlSFwnpGRs91N78Q2OaL",
-            quantity: 1,
-          },
-        ],
-        payment_intent: paymentIntentId,
-      }),
-    });
-    console.log("response is --->", response);
-    const data = await response.data;
-    console.log("data is -->", data);
-    window.location.href = data.url;
+    try {
+      setIsProcessing(true); 
+
+      let paymentIntentId;
+      //! creating a new order
+      const res = await newRequest.post(`/orders/${id}`, {
+        buyerId: currentUserID,
+      });
+
+      if (res.status === 200) {
+        paymentIntentId = res.data.paymentIntentId;
+        console.log("Payment Intent ID:", paymentIntentId);
+      } else {
+        console.error("Error:", response.statusText);
+      }
+
+      //! pay page
+      const response = await newRequest.post(`${url}/checkout`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              price: "price_1NjmAlSFwnpGRs91N78Q2OaL",
+              quantity: 1,
+            },
+          ],
+          payment_intent: paymentIntentId,
+        }),
+      });
+
+      const data = await response.data;
+      window.location.href = data.url;
+    } catch (error) {
+      console.error("Payment error:", error);
+    } finally {
+      setIsProcessing(false); 
+    }
   };
 
   return (
@@ -242,7 +252,9 @@ function Gig() {
               ))}
             </div>
 
-            <button onClick={handlePay}> Continue</button>
+            <button onClick={handlePay} disabled={isProcessing}>
+              {isProcessing ? <ClipLoader color="white" /> : "Continue"}
+            </button>
           </div>
         </div>
       )}
