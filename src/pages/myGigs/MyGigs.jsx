@@ -6,7 +6,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import { BarLoader } from "react-spinners";
 
-
 function MyGigs() {
   const currentUser = getCurrentUser();
 
@@ -37,13 +36,13 @@ function MyGigs() {
     <div className="myGigs">
       {isLoading ? (
         <div className="loader">
-        <BarLoader
-          color="#ff4533"
-          loading={isLoading}
-          width={150}
-          height={10}
-        />
-      </div>
+          <BarLoader
+            color="#ff4533"
+            loading={isLoading}
+            width={150}
+            height={10}
+          />
+        </div>
       ) : error ? (
         "error"
       ) : (
@@ -62,11 +61,10 @@ function MyGigs() {
                 <th>Image</th>
                 <th>Title</th>
                 <th>Price</th>
-                <th>Sales</th>
                 <th>Action</th>
               </tr>
             </thead>
-            
+
             <tbody>
               {data.map((gig) => (
                 <tr key={gig._id}>
@@ -75,7 +73,7 @@ function MyGigs() {
                   </td>
                   <td>{gig.title}</td>
                   <td>{gig.price}</td>
-                  <td>{gig.sales}</td>
+                  {/* <td>{gig.sales}</td> */}
                   <td>
                     <img
                       className="delete"

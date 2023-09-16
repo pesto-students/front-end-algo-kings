@@ -7,6 +7,33 @@ import { useLocation } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 
 function Gigs() {
+  const queryParameters = new URLSearchParams(window.location.search);
+  const category = queryParameters.get("cat") || queryParameters.get("search");
+  category.toLocaleLowerCase();
+  let catToRender;
+  switch (category) {
+    case "design":
+      catToRender = "Design";
+      break;
+    case "ai":
+      catToRender = "AI Services";
+      break;
+    case "animation":
+      catToRender = "Animation";
+      break;
+    case "writing":
+      catToRender = "Writing and Translation";
+      break;
+    case "web":
+      catToRender = "Web Development";
+      break;
+    case "photography":
+      catToRender = "Photography";
+      break;
+    default:
+      break;
+  }
+
   const [sort, setSort] = useState("sales");
   const [open, setOpen] = useState(false);
   const minRef = useRef();
@@ -14,18 +41,13 @@ function Gigs() {
 
   const { search } = useLocation();
 
-
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["gigs"],
     queryFn: () =>
       newRequest
         .get(
           `/gigs${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`
-          // {
-          //   headers: {
-          //     Authorization: `Bearer ${token}`, // Pass the accessToken in the Authorization header
-          //   },
-          // }
+          
         )
         .then((res) => {
           return res.data;
@@ -45,17 +67,10 @@ function Gigs() {
     refetch();
   };
 
-  
-
   return (
     <div className="gigs">
       <div className="container">
-        <span className="breadcrumbs">Gigster Graphics & Design </span>
-        <h1>AI Artists </h1>
-
-        <p>
-          Explore the boundaries of art and technology with Gigster's AI artists
-        </p>
+               <h1>{catToRender}</h1>
         <div className="menu">
           <div className="left">
             <span>Budget</span>

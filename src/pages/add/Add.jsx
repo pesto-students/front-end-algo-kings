@@ -124,14 +124,15 @@ const Add = () => {
               placeholder="e.g. One-page web design"
               onChange={handleChange}
             />
-            <label htmlFor="">Short Description</label>
+            <label htmlFor="">Short Description (Maximum 50 characters)</label>
             <textarea
+              maxLength={50}
               name="shortDesc"
               onChange={handleChange}
               id=""
               placeholder="Short description of your service"
               cols="30"
-              rows="10"
+              rows="3"
             ></textarea>
             <label htmlFor="">Delivery Time (e.g. 3 days)</label>
             <input type="number" name="deliveryTime" onChange={handleChange} />
@@ -141,7 +142,7 @@ const Add = () => {
               name="revisionNumber"
               onChange={handleChange}
             />
-            <label htmlFor="">Add Features</label>
+            <label htmlFor="">Add Features (Maximum 5 features)</label>
             <form action="" className="add" onSubmit={handleFeature}>
               <input type="text" placeholder="e.g. page design" />
               <button type="submit">Add</button>
