@@ -23,6 +23,33 @@ const Message = () => {
       }),
   });
 
+  const {
+    isLoading: isLoadingSeller,
+    error: errorSeller,
+    data: sellerData1,
+    refetch,
+  } = useQuery({
+    queryKey: ["gigUser", sellerId],
+    queryFn: async () =>
+      await newRequest.get(`/users/${sellerId}`).then((res) => {
+        return res.data;
+      }),
+  });
+  const {
+    isLoading: isLoadingBuyer,
+    error: errorBuyer,
+    data: buyerData,
+  } = useQuery({
+    queryKey: ["gigUser", buyerId],
+    queryFn: async () =>
+      await newRequest.get(`/users/${buyerId}`).then((res) => {
+        return res.data;
+      }),
+  });
+
+  console.log("sellerData", isLoadingSeller ? "Loading" : sellerData1);
+  console.log("buyerData ", isLoadingBuyer ? "Loading" : buyerData);
+
   const mutation = useMutation({
     mutationFn: (message) => {
       return newRequest.post(`/messages`, message);
@@ -58,6 +85,16 @@ const Message = () => {
       ),
     enabled: !!data,
   });
+
+  const renderProfileImage = (m) => {
+    if (m.userId === buyerId && !isLoadingBuyer && buyerData) {
+      return buyerData.img || "/img/noavatar.png";
+    } else if (!isLoadingSeller && sellerData1) {
+      return sellerData1.img || "/img/noavatar.png";
+    } else {
+      return "/img/noavatar.png"; // Default image
+    }
+  };
 
   return (
     <div className="message">
@@ -101,15 +138,13 @@ const Message = () => {
           "error"
         ) : (
           <div className="messages">
+            {console.log("data is -> ", data)}
             {data.map((m) => (
               <div
                 className={m.userId === currentUser._id ? "owner item" : "item"}
                 key={m._id}
               >
-                <img
-                  src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                  alt=""
-                />
+                <img src={renderProfileImage(m)} alt="profile image" />
                 <p>{m.desc}</p>
               </div>
             ))}

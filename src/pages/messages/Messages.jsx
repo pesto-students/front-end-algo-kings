@@ -6,7 +6,6 @@ import "./Messages.scss";
 import moment from "moment";
 import { BarLoader } from "react-spinners";
 
-
 const Messages = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -33,13 +32,17 @@ const Messages = () => {
     mutation.mutate(id);
   };
 
-  const { isLoading: sellerDataLoading, data: sellerData } = useQuery({
+  const {
+    isLoading: sellerDataLoading,
+    data: sellerData,
+    refetch,
+  } = useQuery({
     queryKey: ["sellers"],
     queryFn: () =>
       Promise.all(
         data.map(
-          (c) =>
-            newRequest
+          async (c) =>
+            await newRequest
               .get(
                 `conversations/getName/${
                   currentUser.isSeller ? c.buyerId : c.sellerId
@@ -54,17 +57,21 @@ const Messages = () => {
     enabled: !!data, // Only fetch when data is available
   });
 
+  const reload = () => {
+    window.location.href = window.location.href;
+  };
+
   return (
     <div className="messages">
       {isLoading ? (
         <div className="loader">
-        <BarLoader
-          color="#ff4533"
-          loading={isLoading}
-          width={150}
-          height={10}
-        />
-      </div>
+          <BarLoader
+            color="#ff4533"
+            loading={isLoading}
+            width={150}
+            height={10}
+          />
+        </div>
       ) : error ? (
         "error"
       ) : (
@@ -73,63 +80,78 @@ const Messages = () => {
             <h1>Messages</h1>
           </div>
           <table>
-            <tr>
-              <th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>
-              <th>Last Message</th>
-              <th>Date</th>
-              <th>Action</th>
-            </tr>
-            {data.map((c) => (
-              <tr
-                className={
-                  ((currentUser.isSeller && !c.readBySeller) ||
-                    (!currentUser.isSeller && !c.readByBuyer)) &&
-                  "active"
-                }
-                key={c.id}
-              >
-                {/* <td>{isLoadiing ? "Loading.." : res.data}</td> */}
-                
-                <td>
-                  {!currentUser.isSeller
-                    ? sellerDataLoading
-                      ? <div className="loader">
-                      <BarLoader
-                        color="#ff4533"
-                        loading={isLoading}
-                        width={150}
-                        height={10}
-                      />
-                    </div>
-                      : sellerData.find((e) => e.sellerId === c.sellerId)
-                          ?.sellerName
-                    : sellerDataLoading ? <div className="loader">
-                    <BarLoader
-                      color="#ff4533"
-                      loading={isLoading}
-                      width={150}
-                      height={10}
-                    />
-                  </div> :  sellerData.find((e) => e.sellerId === c.buyerId)
-                        ?.sellerName}
-                </td>
-
-                <td>
-                  <Link to={`/message/${c.id}`} className="link">
-                    {c?.lastMessage?.substring(0, 100)}...
-                  </Link>
-                </td>
-                <td>{moment(c.updatedAt).fromNow()}</td>
-                <td>
-                  {((currentUser.isSeller && !c.readBySeller) ||
-                    (!currentUser.isSeller && !c.readByBuyer)) && (
-                    <button onClick={() => handleRead(c.id)}>
-                      Mark as Read
-                    </button>
-                  )}
-                </td>
+            <thead>
+              <tr>
+                <th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>
+                <th>Last Message</th>
+                <th>Date</th>
+                <th>Action</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {data.map((c) => (
+                <tr
+                  className={
+                    ((currentUser.isSeller && !c.readBySeller) ||
+                      (!currentUser.isSeller && !c.readByBuyer)) &&
+                    "active"
+                  }
+                  key={c.id}
+                >
+                  <td>
+                    {!currentUser.isSeller ? (
+                      sellerDataLoading ? (
+                        <div className="loader">
+                          <BarLoader
+                            color="#ff4533"
+                            loading={isLoading}
+                            width={150}
+                            height={10}
+                          />
+                        </div>
+                      ) : (
+                        sellerData.find((e) =>
+                          e && e.sellerId === c.sellerId ? (
+                            e.sellerName
+                          ) : (
+                            <div>
+                              Seller data not found.{" "}
+                              <button onClick={reload}>Reload</button>
+                            </div>
+                          )
+                        )?.sellerName
+                      )
+                    ) : (
+                      sellerData.find((e) =>
+                        e && e.sellerId === c.sellerId ? (
+                          e.sellerName
+                        ) : (
+                          <div>
+                            Seller data not found.{" "}
+                            <button onClick={reload}>Reload</button>
+                          </div>
+                        )
+                      )?.sellerName
+                    )}
+                  </td>
+
+                  <td>
+                    <Link to={`/message/${c.id}`} className="link">
+                      {c?.lastMessage?.substring(0, 100)}...
+                    </Link>
+                  </td>
+                  <td>{moment(c.updatedAt).fromNow()}</td>
+                  <td>
+                    {((currentUser.isSeller && !c.readBySeller) ||
+                      (!currentUser.isSeller && !c.readByBuyer)) && (
+                      <button onClick={() => handleRead(c.id)}>
+                        Mark as Read
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       )}
