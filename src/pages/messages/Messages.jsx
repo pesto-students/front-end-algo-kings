@@ -110,28 +110,56 @@ const Messages = () => {
                           />
                         </div>
                       ) : (
-                        sellerData.find((e) =>
-                          e && e.sellerId === c.sellerId ? (
-                            e.sellerName
-                          ) : (
+                        (() => {
+                          if (sellerData) {
+                            const seller = sellerData.find(
+                              (e) => e && e.sellerId === c.sellerId
+                            );
+                            if (seller) {
+                              return seller.sellerName;
+                            } else {
+                              return (
+                                <div>
+                                  Seller data not found.{" "}
+                                  <button onClick={reload}>Reload</button>
+                                </div>
+                              );
+                            }
+                          } else {
+                            return (
+                              <div>
+                                Seller data not found.{" "}
+                                <button onClick={reload}>Reload</button>
+                              </div>
+                            );
+                          }
+                        })()
+                      )
+                    ) : (
+                      (() => {
+                        if (sellerData) {
+                          const seller = sellerData.find(
+                            (e) => e && e.sellerId === c.buyerId
+                          );
+                          if (seller) {
+                            return seller.sellerName;
+                          } else {
+                            return (
+                              <div>
+                                Seller data not found.{" "}
+                                <button onClick={reload}>Reload</button>
+                              </div>
+                            );
+                          }
+                        } else {
+                          return (
                             <div>
                               Seller data not found.{" "}
                               <button onClick={reload}>Reload</button>
                             </div>
-                          )
-                        )?.sellerName
-                      )
-                    ) : (
-                      sellerData.find((e) =>
-                        e && e.sellerId === c.sellerId ? (
-                          e.sellerName
-                        ) : (
-                          <div>
-                            Seller data not found.{" "}
-                            <button onClick={reload}>Reload</button>
-                          </div>
-                        )
-                      )?.sellerName
+                          );
+                        }
+                      })()
                     )}
                   </td>
 
